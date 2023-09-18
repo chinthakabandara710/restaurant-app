@@ -7,6 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:restuarant/Screens/addHighlights.dart';
 import 'package:restuarant/Screens/cart_screen.dart';
+import 'package:restuarant/Screens/settings.dart';
 import 'package:restuarant/Screens/welcome.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import '../Components/bottom_app_bar.dart';
@@ -14,6 +15,7 @@ import '../Task/cart_data.dart';
 import '../constants.dart';
 import 'add_main.dart';
 import 'menu.dart';
+import 'order_history.dart';
 
 class HomePage extends StatefulWidget {
   static String id = "home_screen";
@@ -134,6 +136,7 @@ class _HomePageState extends State<HomePage> {
     // getImageLinks();
     getDocs();
     getCurrentUser();
+
     var currentHour = DateTime.now().hour;
     // String? newTaskTitle;
     // double newPriceVal = 100.0;
@@ -282,14 +285,30 @@ class _HomePageState extends State<HomePage> {
                 visible: role == true ? true : false,
                 child: ListTile(
                   leading: Icon(
-                    Icons.settings,
+                    Icons.password_outlined,
                   ),
-                  title: const Text('Settings'),
-                  onTap: () {},
+                  title: const Text('Change Admin Password'),
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => AdminSettings()));
+                  },
+                ),
+              ),
+              Visibility(
+                visible: role == true ? true : false,
+                child: ListTile(
+                  leading: Icon(
+                    Icons.history_edu_sharp,
+                  ),
+                  title: const Text('Orders History'),
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => OrdersHistory()));
+                  },
                 ),
               ),
               SizedBox(
-                height: 300,
+                height: 270,
               ),
               Column(
                 mainAxisAlignment: MainAxisAlignment.end,
@@ -371,7 +390,7 @@ class _HomePageState extends State<HomePage> {
                 child: Row(
                   children: [
                     Text(
-                      'Hi, $fullName',
+                      'Hi, $fullName 😊',
                       style: subTitleTextStyle,
                     ),
                   ],

@@ -14,7 +14,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  bool _isObscure3 = true;
+  bool _isObscure = true;
   bool visible = false;
   bool showSpinner = false;
 
@@ -75,12 +75,14 @@ class _LoginPageState extends State<LoginPage> {
                           height: 20,
                         ),
                         TextFormField(
+                          // style: TextStyle(fontSize: 20.0, color: Colors.black),
                           controller: emailController,
                           decoration: InputDecoration(
                             filled: true,
                             fillColor: Colors.white,
-                            hintText: 'Email',
-                            enabled: true,
+                            hintText: 'Enter your email',
+                            // hintStyle: TextStyle(color: Colors.grey),
+                            // enabled: true,
                             contentPadding: const EdgeInsets.only(
                                 left: 14.0, bottom: 8.0, top: 8.0),
                             focusedBorder: OutlineInputBorder(
@@ -94,6 +96,7 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                           validator: (value) {
                             if (value!.length == 0) {
+                              print("Email cannot be empty");
                               return "Email cannot be empty";
                             }
                             if (!RegExp(
@@ -113,31 +116,31 @@ class _LoginPageState extends State<LoginPage> {
                           height: 20,
                         ),
                         TextFormField(
+                          obscureText: _isObscure,
                           controller: passwordController,
-                          obscureText: _isObscure3,
                           decoration: InputDecoration(
                             suffixIcon: IconButton(
-                                icon: Icon(_isObscure3
-                                    ? Icons.visibility
-                                    : Icons.visibility_off),
+                                icon: Icon(_isObscure
+                                    ? Icons.visibility_off
+                                    : Icons.visibility),
                                 onPressed: () {
                                   setState(() {
-                                    _isObscure3 = !_isObscure3;
+                                    _isObscure = !_isObscure;
                                   });
                                 }),
                             filled: true,
                             fillColor: Colors.white,
-                            hintText: 'Password',
+                            hintText: 'Enter your password',
                             enabled: true,
                             contentPadding: const EdgeInsets.only(
                                 left: 14.0, bottom: 8.0, top: 15.0),
                             focusedBorder: OutlineInputBorder(
                               borderSide: new BorderSide(color: Colors.white),
-                              borderRadius: new BorderRadius.circular(10),
+                              borderRadius: new BorderRadius.circular(20),
                             ),
                             enabledBorder: UnderlineInputBorder(
                               borderSide: new BorderSide(color: Colors.white),
-                              borderRadius: new BorderRadius.circular(10),
+                              borderRadius: new BorderRadius.circular(20),
                             ),
                           ),
                           validator: (value) {
@@ -151,10 +154,7 @@ class _LoginPageState extends State<LoginPage> {
                               return null;
                             }
                           },
-                          onSaved: (value) {
-                            passwordController.text = value!;
-                          },
-                          keyboardType: TextInputType.emailAddress,
+                          onChanged: (value) {},
                         ),
                         SizedBox(
                           height: 20,
@@ -279,6 +279,11 @@ class _LoginPageState extends State<LoginPage> {
           //       );
         }
       } catch (e) {
+        Alert(
+          type: AlertType.error,
+          context: context,
+          desc: e.toString(),
+        ).show();
         print(e);
       }
 
@@ -300,6 +305,13 @@ class _LoginPageState extends State<LoginPage> {
           //     "./assets/success.png"),
         ).show();
       } else {
+        Alert(
+          type: AlertType.error,
+          context: context,
+          desc: e.code.toString(),
+          // image: Image.asset(
+          //     "./assets/success.png"),
+        ).show();
         print(e.toString());
       }
     }

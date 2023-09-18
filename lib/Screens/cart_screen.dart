@@ -49,7 +49,7 @@ class CartsScreen extends StatelessWidget {
                 ),
                 Container(
                   child: Text(
-                    '$total',
+                    'Rs. $total',
                     style: TextStyle(
                       color: Colors.green,
                       fontSize: 20.0,

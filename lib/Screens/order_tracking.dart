@@ -224,18 +224,18 @@ class OrderTrackingPageState extends State<OrderTrackingPage> {
               ),
             ),
           ),
-          Container(
-            child: Positioned(
-                top: 20,
-                left: 10,
-                child: Text(
-                  'Position : $user_update_position',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                )),
-          ),
+          // Container(
+          //   child: Positioned(
+          //       top: 20,
+          //       left: 10,
+          //       child: Text(
+          //         'Position : $user_update_position',
+          //         style: TextStyle(
+          //           fontSize: 20,
+          //           fontWeight: FontWeight.bold,
+          //         ),
+          //       )),
+          // ),
         ],
       ),
     );

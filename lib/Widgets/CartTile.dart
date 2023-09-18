@@ -32,7 +32,7 @@ class CartTile extends StatelessWidget {
             decoration: isChecked ? TextDecoration.lineThrough : null),
       ),
 
-      subtitle: Text('\$$price'),
+      subtitle: Text('Rs. $price'),
       // trailing: Row(
       //   children: [
       //     IconButton(

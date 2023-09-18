@@ -5,14 +5,14 @@ import 'package:rflutter_alert/rflutter_alert.dart';
 
 import 'order_tracking.dart';
 
-class AdminOrders extends StatefulWidget {
-  const AdminOrders({Key? key}) : super(key: key);
+class OrdersHistory extends StatefulWidget {
+  const OrdersHistory({Key? key}) : super(key: key);
 
   @override
-  State<AdminOrders> createState() => _AdminOrdersState();
+  State<OrdersHistory> createState() => _OrdersHistoryState();
 }
 
-class _AdminOrdersState extends State<AdminOrders> {
+class _OrdersHistoryState extends State<OrdersHistory> {
   final CollectionReference orderList =
       FirebaseFirestore.instance.collection('orders');
   final _auth = FirebaseAuth.instance;
@@ -31,7 +31,7 @@ class _AdminOrdersState extends State<AdminOrders> {
     // counter();
     return Scaffold(
       appBar: AppBar(
-        title: Text('Ongoing orders'),
+        title: Text('Orders History'),
       ),
       body: StreamBuilder(
         stream: orderList.orderBy('date', descending: true).snapshots(),
@@ -45,8 +45,7 @@ class _AdminOrdersState extends State<AdminOrders> {
                   double tot = documentSnapshot['amount'];
 
                   return Visibility(
-                    visible: (documentSnapshot['status'] == 'Pending' ||
-                            documentSnapshot['status'] == 'On the way')
+                    visible: (documentSnapshot['status'] == 'Deliverd')
                         ? true
                         : false,
                     child: GestureDetector(
@@ -77,7 +76,7 @@ class _AdminOrdersState extends State<AdminOrders> {
                                     padding: const EdgeInsets.only(
                                         top: 10, bottom: 5.0),
                                     child: Text(
-                                      'Order Details',
+                                      'Your Order Details',
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 30.0,
@@ -250,128 +249,14 @@ class _AdminOrdersState extends State<AdminOrders> {
                                                   fontSize: 10.0,
                                                 ),
                                               ),
+                                              Text(
+                                                'Amount : ${documentSnapshot['amount']}',
+                                                style: TextStyle(
+                                                  fontSize: 10.0,
+                                                ),
+                                              ),
                                             ],
                                           ),
-                                          Column(
-                                            children: [
-                                              IconButton(
-                                                  onPressed: () {
-                                                    Alert(
-                                                        context: context,
-                                                        desc:
-                                                            'Are you going to start the delivery ride ?',
-                                                        buttons: [
-                                                          DialogButton(
-                                                            onPressed: () =>
-                                                                Navigator.pop(
-                                                                    context),
-                                                            child: Text(
-                                                              "No",
-                                                              style: TextStyle(
-                                                                  color: Colors
-                                                                      .white,
-                                                                  fontSize: 20),
-                                                            ),
-                                                          ),
-                                                          DialogButton(
-                                                            color:
-                                                                Color.fromRGBO(
-                                                                    243,
-                                                                    73,
-                                                                    73,
-                                                                    1.0),
-                                                            onPressed: () {
-                                                              Navigator.pop(
-                                                                  context);
-                                                              Navigator.push(
-                                                                context,
-                                                                MaterialPageRoute(
-                                                                  builder: (_) =>
-                                                                      OrderTrackingPage(
-                                                                    orderId:
-                                                                        '${documentSnapshot.id.toString()}',
-                                                                  ),
-                                                                ),
-                                                              );
-                                                            },
-                                                            child: Text(
-                                                              "Yes",
-                                                              style: TextStyle(
-                                                                  color: Colors
-                                                                      .white,
-                                                                  fontSize: 20),
-                                                            ),
-                                                          ),
-                                                        ]).show();
-                                                  },
-                                                  icon: Icon(
-                                                      Icons.delivery_dining)),
-                                              IconButton(
-                                                  onPressed: () async {
-                                                    Alert(
-                                                        context: context,
-                                                        desc:
-                                                            'Did you deliver the order ?',
-                                                        buttons: [
-                                                          DialogButton(
-                                                            onPressed: () =>
-                                                                Navigator.pop(
-                                                                    context),
-                                                            child: Text(
-                                                              "No",
-                                                              style: TextStyle(
-                                                                  color: Colors
-                                                                      .white,
-                                                                  fontSize: 20),
-                                                            ),
-                                                          ),
-                                                          DialogButton(
-                                                            color:
-                                                                Color.fromRGBO(
-                                                                    243,
-                                                                    73,
-                                                                    73,
-                                                                    1.0),
-                                                            onPressed:
-                                                                () async {
-                                                              Navigator.pop(
-                                                                  context);
-                                                              Alert(
-                                                                context:
-                                                                    context,
-                                                                desc:
-                                                                    "Deliverd Successfuly",
-                                                              ).show();
-                                                              await FirebaseFirestore
-                                                                  .instance
-                                                                  .collection(
-                                                                      'orders')
-                                                                  .doc(documentSnapshot
-                                                                      .id
-                                                                      .toString())
-                                                                  .set(
-                                                                      {
-                                                                    'status':
-                                                                        'Deliverd',
-                                                                  },
-                                                                      SetOptions(
-                                                                          merge:
-                                                                              true));
-                                                            },
-                                                            child: Text(
-                                                              "Yes",
-                                                              style: TextStyle(
-                                                                  color: Colors
-                                                                      .white,
-                                                                  fontSize: 20),
-                                                            ),
-                                                          ),
-                                                        ]).show();
-                                                  },
-                                                  icon: Icon(Icons
-                                                      .check_circle_outline_sharp))
-                                            ],
-                                          )
                                         ],
                                       ),
                                     ),

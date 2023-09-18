@@ -30,6 +30,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Restuarant_App',
         theme: ThemeData(
+
           backgroundColor: Colors.grey[50],
           primarySwatch: Colors.green,
           visualDensity: VisualDensity.adaptivePlatformDensity,
@@ -47,5 +48,6 @@ class MyApp extends StatelessWidget {
         },
       ),
     );
+    
   }
 }

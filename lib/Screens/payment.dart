@@ -111,7 +111,7 @@ void addPayment(context, total) {
     buttons: [
       DialogButton(
         child: Text(
-          "Cancel",
+          "Ok",
           style: TextStyle(color: Colors.white, fontSize: 20),
         ),
         onPressed: () {
@@ -119,7 +119,7 @@ void addPayment(context, total) {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (_) => Orders(),
+              builder: (_) => HomePage(),
             ),
           );
         },
@@ -127,7 +127,6 @@ void addPayment(context, total) {
       ),
     ],
   ).show();
-  Provider.of<CartData>(context, listen: false).emptyCart();
 
   updateOrderNumber();
   getDocs();
@@ -203,10 +202,10 @@ class _PaymentState extends State<Payment> {
                 ],
               ),
               Padding(
-                padding: const EdgeInsets.all(30.0),
+                padding: const EdgeInsets.all(10.0),
                 child: Center(
                   child: Text(
-                    'Total is : $total',
+                    'Total: Rs $total',
                     style: GoogleFonts.courgette(
                       // fontStyle: FontStyle.italic,
                       fontSize: 40,
@@ -226,33 +225,47 @@ class _PaymentState extends State<Payment> {
                 color: Colors.green,
                 child: TextButton(
                   onPressed: () {
-                    Alert(
-                      context: context,
-                      type: AlertType.warning,
-                      desc: "Do you want to place the order?",
-                      buttons: [
-                        DialogButton(
-                          child: Text(
-                            "Yes",
-                            style: TextStyle(color: Colors.white, fontSize: 20),
+                    if (total == 0) {
+                      Alert(
+                        context: context,
+                        type: AlertType.warning,
+                        desc: "Your cart is empty",
+                      ).show();
+                    } else {
+                      Alert(
+                        context: context,
+                        type: AlertType.warning,
+                        desc: "Do you want to place the order?",
+                        buttons: [
+                          DialogButton(
+                            child: Text(
+                              "Yes",
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 20),
+                            ),
+                            onPressed: () {
+                              Navigator.pop(context);
+                              addPayment(context, total);
+                              var user = _auth.currentUser;
+                              setState(() {
+                                Provider.of<CartData>(context, listen: false)
+                                    .emptyCart();
+                              });
+                            },
+                            color: Color.fromRGBO(0, 179, 134, 1.0),
                           ),
-                          onPressed: () {
-                            Navigator.pop(context);
-                            addPayment(context, total);
-                            var user = _auth.currentUser;
-                          },
-                          color: Color.fromRGBO(0, 179, 134, 1.0),
-                        ),
-                        DialogButton(
-                          child: Text(
-                            "No",
-                            style: TextStyle(color: Colors.white, fontSize: 20),
+                          DialogButton(
+                            child: Text(
+                              "No",
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 20),
+                            ),
+                            onPressed: () => Navigator.pop(context),
+                            color: Color.fromRGBO(0, 179, 134, 1.0),
                           ),
-                          onPressed: () => Navigator.pop(context),
-                          color: Color.fromRGBO(0, 179, 134, 1.0),
-                        ),
-                      ],
-                    ).show();
+                        ],
+                      ).show();
+                    }
                   },
                   child: Center(
                     child: Text(

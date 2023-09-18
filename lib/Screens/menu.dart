@@ -87,9 +87,14 @@ class MenuScreen extends StatelessWidget {
                               fit: BoxFit.cover,
                             ),
                           ),
-                          title: Text(documentSnapshot['name']),
+                          title: Text(
+                            documentSnapshot['name'],
+                            style: TextStyle(color: Colors.black),
+                          ),
                           subtitle: Text(
-                              '\$ ' + documentSnapshot['price'].toString()),
+                            'Rs. ' + documentSnapshot['price'].toString(),
+                            style: TextStyle(color: Colors.black),
+                          ),
                           trailing: SizedBox(
                             width: 100,
                             child: Row(

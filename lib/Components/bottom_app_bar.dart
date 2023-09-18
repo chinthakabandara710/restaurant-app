@@ -6,7 +6,8 @@ import '../Screens/carousel.dart';
 import '../Screens/chat_screen.dart';
 import '../Screens/home_Page.dart';
 import '../Screens/notifications.dart';
-import '../Screens/pieChart.dart';
+import '../Screens/income_generate.dart';
+// import '../Screens/income_generate.dart';
 
 class bottom_app_bar extends StatelessWidget {
   // const bottom_app_bar({
@@ -43,7 +44,7 @@ class bottom_app_bar extends StatelessWidget {
   Widget build(BuildContext context) {
     return BottomAppBar(
       // shape: shape,
-      color: Colors.green,
+      color: Theme.of(context).primaryColorDark,
       child: Padding(
         padding: const EdgeInsets.only(left: 20.0, right: 20.0, bottom: 10.0),
         child: IconTheme(
@@ -114,22 +115,6 @@ class bottom_app_bar extends StatelessWidget {
                 ),
               ),
               Visibility(
-                visible: user == true ? true : false,
-                child: IconButton(
-                  color: Colors.white,
-                  tooltip: 'Analysis',
-                  icon: const Icon(Icons.analytics),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) => AnalysisHomePage(),
-                      ),
-                    );
-                  },
-                ),
-              ),
-              Visibility(
                 visible: true,
                 child: IconButton(
                   color: Colors.white,
@@ -154,6 +139,22 @@ class bottom_app_bar extends StatelessWidget {
                           ));
                     }
                     ;
+                  },
+                ),
+              ),
+              Visibility(
+                visible: user == true ? true : false,
+                child: IconButton(
+                  color: Colors.white,
+                  tooltip: 'Analysis',
+                  icon: const Icon(Icons.analytics),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => DatePickerExample(),
+                      ),
+                    );
                   },
                 ),
               ),
